@@ -21,13 +21,21 @@ class MainActivity : AppCompatActivity() {
 
     fun changeFragments(fragment: Fragment) {
         supportFragmentManager
-            .beginTransaction()
-            .replace(
-                R.id.fragmentContainer,
-                fragment
-            )
-            .addToBackStack(fragment.tag)
-            .commit()
+            .beginTransaction().apply {
+                setCustomAnimations(
+                    R.anim.in_down,
+                    R.anim.out_top,
+                    R.anim.out_down,
+                    R.anim.in_top
+                )
+                replace(
+                    R.id.fragmentContainer,
+                    fragment
+                )
+                addToBackStack(fragment.tag)
+                commit()
+            }
+
     }
 
 }

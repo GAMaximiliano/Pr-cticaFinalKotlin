@@ -65,9 +65,9 @@ class ContainerViewPrincipal : Fragment(R.layout.fragment_container_view_princip
 
         imageView.setImageResource(picture.source)
 
-        imgSound.setOnClickListener { 
+        imgSound.setOnClickListener {
             if ( picture.save )
-                MediaPlayer.create(context, R.raw.page)
+                MediaPlayer.create(context, R.raw.page).start()
         }
 
         btnSiguiente.setOnClickListener {
