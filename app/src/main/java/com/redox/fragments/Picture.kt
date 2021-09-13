@@ -15,6 +15,7 @@ class Picture(
 ) : Parcelable
 
 @JsonClass(generateAdapter = true)
+@Parcelize
 class listPicture(
     val arrayPictures: Array<Picture> = arrayOf(
         Picture("Don Quijote", R.drawable.ic_don_quijote),
@@ -22,4 +23,4 @@ class listPicture(
         Picture("Dracula", R.drawable.ic_dracula),
         Picture("El jugador", R.drawable.ic_jugador)
     )
-)
+) : Parcelable
