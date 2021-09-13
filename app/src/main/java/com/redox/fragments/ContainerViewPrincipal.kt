@@ -1,5 +1,7 @@
 package com.redox.fragments
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import com.squareup.moshi.Moshi
+import java.lang.Exception
 
 class ContainerViewPrincipal : Fragment(R.layout.fragment_container_view_principal) {
 
@@ -16,11 +20,17 @@ class ContainerViewPrincipal : Fragment(R.layout.fragment_container_view_princip
     lateinit var lst: listPicture
     lateinit var arrayList: Array<Picture>
     lateinit var picture: Picture
+    lateinit var sharedPreferences: SharedPreferences
 
     var index = 0
+    var PREFERENCE_ID = "MY_PREFERENCE_ID"
+    var MY_IMAGES = "MY_IMAGES"
+    var moshi = Moshi.Builder().build()
 
     override fun onResume() {
         super.onResume()
+
+        sharedPreferences = requireActivity().getSharedPreferences(PREFERENCE_ID, Context.MODE_PRIVATE)
 
         lst = getShared()
         arrayList = lst.arrayPictures
@@ -30,8 +40,14 @@ class ContainerViewPrincipal : Fragment(R.layout.fragment_container_view_princip
     }
 
     @JvmName("getListPictures1")
-    private fun getShared():listPicture {
-        return listPicture()
+    private fun getShared(): listPicture {
+        return sharedPreferences.getString(MY_IMAGES, null)?.let {
+            return@let try {
+                moshi.adapter(listPicture::class.java).fromJson(it)
+            } catch (e: Exception) {
+                listPicture()
+            }
+        } ?: listPicture()
     }
 
     private fun initViews() {
