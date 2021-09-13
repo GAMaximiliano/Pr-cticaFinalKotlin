@@ -53,9 +53,9 @@ class ViewDetail : Fragment(R.layout.fragment_view_detail) {
             star.setImageResource(R.drawable.ic_round_star_border_24)
 
         if ( pic.save )
-            saveMusic.setImageResource(R.drawable.ic_outline_library_music_24)
-        else
             saveMusic.setImageResource(R.drawable.ic_baseline_library_music_24_ok)
+        else
+            saveMusic.setImageResource(R.drawable.ic_outline_library_music_24)
 
         star.setOnClickListener {
             pic.like = !pic.like
