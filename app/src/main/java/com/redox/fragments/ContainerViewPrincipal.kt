@@ -2,6 +2,7 @@ package com.redox.fragments
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -21,6 +22,7 @@ class ContainerViewPrincipal : Fragment(R.layout.fragment_container_view_princip
     lateinit var arrayList: Array<Picture>
     lateinit var picture: Picture
     lateinit var sharedPreferences: SharedPreferences
+    lateinit var imgSound:ImageView
 
     var index = 0
     var PREFERENCE_ID = "MY_PREFERENCE_ID"
@@ -54,8 +56,19 @@ class ContainerViewPrincipal : Fragment(R.layout.fragment_container_view_princip
         imageView = requireView().findViewById(R.id.imagenContenedor)
         btnSiguiente = requireView().findViewById(R.id.btnSiguiente)
         btnAnterior = requireView().findViewById(R.id.btnAnterior)
+        imgSound = requireView().findViewById(R.id.sound)
+
+        if ( picture.save )
+            imgSound.setImageResource(R.drawable.ic_baseline_library_music_24_ok)
+        else
+            imgSound.setImageResource(R.drawable.ic_outline_library_music_24)
 
         imageView.setImageResource(picture.source)
+
+        imgSound.setOnClickListener { 
+            if ( picture.save )
+                MediaPlayer.create(context, R.raw.page)
+        }
 
         btnSiguiente.setOnClickListener {
             if ( index == arrayList.size-1 )
@@ -64,6 +77,10 @@ class ContainerViewPrincipal : Fragment(R.layout.fragment_container_view_princip
                 index++
             picture = arrayList.get(index)
             imageView.setImageResource(picture.source)
+            if ( picture.save )
+                imgSound.setImageResource(R.drawable.ic_baseline_library_music_24_ok)
+            else
+                imgSound.setImageResource(R.drawable.ic_outline_library_music_24)
         }
 
         btnAnterior.setOnClickListener {
@@ -73,6 +90,10 @@ class ContainerViewPrincipal : Fragment(R.layout.fragment_container_view_princip
                 index--
             picture = arrayList.get(index)
             imageView.setImageResource(picture.source)
+            if ( picture.save )
+                imgSound.setImageResource(R.drawable.ic_baseline_library_music_24_ok)
+            else
+                imgSound.setImageResource(R.drawable.ic_outline_library_music_24)
         }
 
         imageView.setOnClickListener {
